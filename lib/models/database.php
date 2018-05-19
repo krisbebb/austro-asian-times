@@ -9,7 +9,7 @@ class Database{
        WARNING: This file must not be in the public document root for production mode. It has passwords etc. Don't be bad.
     */
     private $host = "localhost";
-    private $database = "blogs_db";
+    private $database = "news_db";
     private $user = "root";
     private $password = "root";
 

@@ -1,3 +1,3 @@
-<h1>Home page</h1>
+<h1>The Austro-Asian Times</h1>
 
 <p><?php echo $message ?></p>

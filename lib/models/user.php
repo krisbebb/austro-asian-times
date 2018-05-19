@@ -1,6 +1,6 @@
 <?php
 class User extends Database{
-    
+
    public function is_authenticated(){
         $id = "";
         $hash="";
@@ -15,7 +15,7 @@ class User extends Database{
         if(!empty($id) && !empty($hash)){
 
             try{
-               $query = "SELECT hashed_password FROM users WHERE id=?";
+               $query = "SELECT hashed_password FROM journalists WHERE id=?";
                if($statement = $this->prepare($query)){
                  $binding = array($id);
                  if(!$statement -> execute($binding)){
@@ -38,12 +38,12 @@ class User extends Database{
         return false;
 
    }
-    
+
 
    public function is_db_empty(){
        $is_empty = false;
-       try{ 
-          $query = "SELECT id FROM users WHERE id=?";
+       try{
+          $query = "SELECT id FROM journalists WHERE id=?";
           if($statement = $this->prepare($query)){
              $id=1;
              $binding = array($id);
@@ -65,13 +65,13 @@ class User extends Database{
        catch(Exception $e){
           throw new Exception($e->getMessage());
        }
-       return $is_empty;    
-    
+       return $is_empty;
+
     }
 
     public function get_users(){
        try{
-          $query = "SELECT id, name FROM users";
+          $query = "SELECT id, login FROM journalists";
           if($statement = $this->prepare($query)){
              $binding = array();
              if(!$statement -> execute($binding)){
@@ -94,11 +94,11 @@ class User extends Database{
 
 
     public function sign_up($user_name, $password, $password_confirm){
-       try{     
+       try{
          if($this->validate_user_name($user_name) && $this->validate_passwords($password,$password_confirm)){
               $salt = $this->generate_salt();
               $password_hash = $this->generate_password_hash($password,$salt);
-              $query = "INSERT INTO users (name,salt,hashed_password) VALUES (?,?,?)";
+              $query = "INSERT INTO journalists (login,salt,hashed_password) VALUES (?,?,?)";
               if($statement = $this->prepare($query)){
                  $binding = array($user_name,$salt,$password_hash);
                  if(!$statement -> execute($binding)){
@@ -113,7 +113,7 @@ class User extends Database{
          else{
             throw new Exception("Invalid data.");
          }
-     
+
 
        }
        catch(Exception $e){
@@ -124,23 +124,23 @@ class User extends Database{
 
     public function get_user_id(){
        $id="";
-       session_start();  
+       session_start();
        if(!empty($_SESSION["id"])){
           $id = $_SESSION["id"];
        }
        session_write_close();
-       return $id;  
+       return $id;
     }
 
     public function get_user_name($id){
        $name=false;
 
        if(empty($id)){
-         throw new Exception("User has no valid id");   
+         throw new Exception("User has no valid id");
        }
-    
+
        try{
-          $query = "SELECT name FROM users WHERE id=?";
+          $query = "SELECT login FROM journalists WHERE id=?";
           if($statement = $this->prepare($query)){
              $binding = array($id);
              if(!$statement -> execute($binding)){
@@ -148,7 +148,7 @@ class User extends Database{
              }
              else{
                 $result = $statement->fetch(PDO::FETCH_ASSOC);
-                $name = $result['name'];
+                $name = $result['login'];
              }
           }
           else{
@@ -170,9 +170,9 @@ class User extends Database{
        if(!empty($id) && $id=="1"){
          throw new Exception("Cannot delete super user!");
        }
-   
+
        try{
-          $query = "DELETE FROM users WHERE id=?";
+          $query = "DELETE FROM journalists WHERE id=?";
           if($statement = $this->prepare($query)){
              $binding = array($id);
              if(!$statement -> execute($binding)){
@@ -189,8 +189,8 @@ class User extends Database{
     }
 
     public function sign_in($user_name,$password){
-       try{ 
-          $query = "SELECT id, salt, hashed_password FROM users WHERE name=?";
+       try{
+          $query = "SELECT id, salt, hashed_password FROM journalists WHERE login=?";
           if($statement = $this->prepare($query)){
              $binding = array($user_name);
              if(!$statement -> execute($binding)){
@@ -221,8 +221,8 @@ class User extends Database{
 
 
     private function set_authenticated_session($id,$password_hash){
-          session_start();  
-     
+          session_start();
+
           //Make it a bit harder to session hijack
           session_regenerate_id(true);
 
@@ -265,9 +265,9 @@ class User extends Database{
         session_start();
         if(!empty($_SESSION["id"]) && !empty($_SESSION["hash"])){
            $_SESSION["id"] = "";
-           $_SESSION["hash"] = ""; 
+           $_SESSION["hash"] = "";
            $_SESSION = array();
-           session_destroy();                     
+           session_destroy();
         }
         session_write_close();
     }
