@@ -17,15 +17,16 @@
         echo "<li><a href='/members'>Members</a></li>";
         echo "<li><a href='/signout'>Sign out</a></li>";
         echo "<li><a href='/signup'>Sign up</a></li>";
+        echo "<li><a href='/add_article'>Add Article</a></li>";
      }
      else{
-        echo "<li><a href='/signin'>Sign in</a></li>";     
+        echo "<li><a href='/signin'>Sign in</a></li>";
      }
   }
  ?>
 
 
- 
+
 </ul>
 </nav>
 
@@ -36,7 +37,7 @@
     echo "<p class='flash'>{$flash}</p>";
   }
   if(!empty($error)){
-    echo "<p class='flash'>{$error}</p>";	
+    echo "<p class='flash'>{$error}</p>";
   }
   require $content;
 ?>
@@ -48,7 +49,7 @@
   }
   else{
      echo "<p>Not signed in</p>";
-   
+
   }
 ?>
 </footer>

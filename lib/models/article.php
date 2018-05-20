@@ -34,7 +34,8 @@ class Article extends Database{
 
     public function get_articles(){
        try{
-          $query = "SELECT article_id, headline FROM articles";
+          // $query = "SELECT article_id, headline FROM articles";
+          $query = "SELECT * FROM articles";
           if($statement = $this->prepare($query)){
              $binding = array();
              if(!$statement -> execute($binding)){

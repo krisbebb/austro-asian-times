@@ -34,7 +34,7 @@ get("/",function($app){
 	    $article = new Article();
       $results = $article->get_articles();
       $app->set_message("articles",$results);
-    
+
    //   else if($user->is_db_empty()){
    //       $app->redirect_to('/signup');
    //   }
@@ -182,7 +182,48 @@ get("/signout",function($app){
      $app->redirect_to("/");
    }
 });
+get("/add_article",function($app){
+  $app->force_to_https("/add_article");
+  $app->set_message("title","Add News Article");
+  try{
+    $user = new User();
+    if($user->is_authenticated()){
+       $app->set_message("authenticated",true);
+     }
+     $article = new Article();
+     $results = $article->get_articles();
+     $app->set_message("articles",$results);
 
+  //   else if($user->is_db_empty()){
+  //       $app->redirect_to('/signup');
+  //   }
+  }
+  catch(Exception $e){
+        $app->set_message("error, ",$e->getMessage());
+  }
+
+  $app->render(LAYOUT,"add_article");
+});
+//
+//    $app->force_to_https("/add_article");
+//    $app->set_message("title","Add News Article");
+//
+//    try{
+//      $user = new User();
+//      if($user->is_authenticated()){
+//         // $app->set_message("error","You are already signed in.");
+//         $app->set_message("is_authenticated",true);
+//         $app->set_flash("you are signed in");
+//      } else {
+//        $app->set_flash("you NOT signed in");
+//      }
+//
+//    }
+//    catch(Exception $e){
+//        $app->set_message("error",$e->getMessage($e));
+//    }
+//    $app->render(LAYOUT,"add_article");
+// });
 
 post("/signup",function($app){
 
@@ -265,6 +306,7 @@ delete("/members/:id",function($app){
      $app->reset_route();
   }
 });
+
 
 
 resolve();
