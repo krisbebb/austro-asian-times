@@ -27,18 +27,22 @@ get("/",function($app){
    $app->set_message("title","Home");
    $app->set_message("message","Welcome");
    try{
-	 $user = new User();
+     $user = new User();
      if($user->is_authenticated()){
-         $app->set_message("authenticated",true);
-     }
-     else if($user->is_db_empty()){
-         $app->redirect_to('/signup');
-     }
+        $app->set_message("authenticated",true);
+      }
+	    $article = new Article();
+      $results = $article->get_articles();
+      $app->set_message("articles",$results);
+    
+   //   else if($user->is_db_empty()){
+   //       $app->redirect_to('/signup');
+   //   }
    }
    catch(Exception $e){
          $app->set_message("error, ",$e->getMessage());
    }
-   
+
    $app->render(LAYOUT,"home");
 });
 
@@ -56,23 +60,23 @@ get("/members",function($app){
          $app->redirect_to('/signup');
      }
      else{
-         $app->set_flash("You are not authorised for this page. Try signing in."); 
-         $app->redirect_to('/signin');     
+         $app->set_flash("You are not authorised for this page. Try signing in.");
+         $app->redirect_to('/signin');
      }
    }
    catch(Exception $e){
          $app->set_message("error, ",$e->getMessage());
    }
-   
-   
-   $app->set_message("title","Members");   
+
+
+   $app->set_message("title","Members");
    $app->render(LAYOUT,"members");
 });
 
 get("/member/:id",function($app){
   $id = $app->route_var('id');
   if(is_numeric($id)){
-  
+
        $app->force_to_https("/member/{$id}");
        $name="";
 
@@ -90,12 +94,12 @@ get("/member/:id",function($app){
          }
          else{
 	         $app->set_flash("You are not authorised to see Members pages. Sign in first.");
-             $app->redirect_to('/signin');	         
+             $app->redirect_to('/signin');
          }
        }
        catch(Exception $e){
              $app->set_flash("error, ",$e->getMessage());
-             $app->redirect_to('/home');	         
+             $app->redirect_to('/home');
        }
 
        $app->set_message("title","Members");
@@ -103,7 +107,7 @@ get("/member/:id",function($app){
        $app->render(LAYOUT,"member");
   }
   else{
-     $app->reset_route(); 
+     $app->reset_route();
   }
 });
 
@@ -115,8 +119,8 @@ get("/signin",function($app){
      $user = new User();
      if($user->is_authenticated()){
         $app->set_message("error","You are already signed in.");
-        $app->set_message("is_authenticated",true);       
-     }   
+        $app->set_message("is_authenticated",true);
+     }
    }
    catch(Exception $e){
        $app->set_message("error",$e->getMessage($e));
@@ -125,7 +129,7 @@ get("/signin",function($app){
 });
 
 get("/signup",function($app){
-    $app->force_to_https("/signup");  
+    $app->force_to_https("/signup");
     $is_authenticated=false;
     $is_db_empty=false;
 
@@ -135,9 +139,9 @@ get("/signup",function($app){
        $is_db_empty = $user->is_db_empty();
     }
     catch(Exception $e){
-       $app->set_flash("We have a problem with DB. The gerbils are working on it."); 
-       $app->redirect_to("/"); 
-    }   
+       $app->set_flash("We have a problem with DB. The gerbils are working on it.");
+       $app->redirect_to("/");
+    }
 
     if($is_authenticated){
         $app->set_message("error","Create more accounts for other users.");
@@ -145,11 +149,11 @@ get("/signup",function($app){
     }
     else if(!$is_authenticated && $is_db_empty){
        $app->set_message("super_user",true);
-       $app->set_message("error","You are the SUPER USER. This account cannot be deleted. You are the boss. The only way to clear the SUPER USER from the database is to DROP the entire table. Please sign in after you have finished signing up.");  
+       $app->set_message("error","You are the SUPER USER. This account cannot be deleted. You are the boss. The only way to clear the SUPER USER from the database is to DROP the entire table. Please sign in after you have finished signing up.");
     }
     else{
-       $app->set_flash("You are not authorised to access this resource yet. I'm gonna tell your mum if you don't sign in."); 
-       $app->redirect_to("/signin");        
+       $app->set_flash("You are not authorised to access this resource yet. I'm gonna tell your mum if you don't sign in.");
+       $app->redirect_to("/signin");
     }
    $app->set_message("title","Sign up");
    $app->render(LAYOUT,"signup");
@@ -162,7 +166,7 @@ get("/signout",function($app){
 
    try{
        $user = new User();
-   
+
       if($user->is_authenticated()){
          $user->sign_out();
          $app->set_flash("You are now signed out.");
@@ -171,11 +175,11 @@ get("/signout",function($app){
       else{
         $app->set_flash("You can't sign out if you are not signed in!");
         $app->redirect_to("/signin");
-      } 
+      }
    }
    catch(Exception $e){
      $app->set_flash("Something wrong with the sessions.");
-     $app->redirect_to("/");        
+     $app->redirect_to("/");
    }
 });
 
@@ -188,32 +192,32 @@ post("/signup",function($app){
           $name = $app->form('name');
           $pw = $app->form('password');
           $confirm = $app->form('password-confirm');
-   
+
           if($name && $pw && $confirm){
               try{
                 $user->sign_up($name,$pw,$confirm);
-                $app->set_flash(htmlspecialchars($app->form('name'))." is now signed up ");    
+                $app->set_flash(htmlspecialchars($app->form('name'))." is now signed up ");
              }
              catch(Exception $e){
-                  $app->set_flash($e->getMessage());  
-                  $app->redirect_to("/signup");          
+                  $app->set_flash($e->getMessage());
+                  $app->redirect_to("/signup");
              }
           }
           else{
-             $app->set_flash("You are not signed up. Try again and don't leave any fields blank.");  
+             $app->set_flash("You are not signed up. Try again and don't leave any fields blank.");
              $app->redirect_to("/signup");
           }
           $app->redirect_to("/signup");
         }
         else{
-           $app->set_flash("You are not authorised to access this resource");  
-           $app->redirect_to("/");           
+           $app->set_flash("You are not authorised to access this resource");
+           $app->redirect_to("/");
         }
-        
+
     }
     catch(Exception $e){
-         $app->set_flash($e.getMessage());  
-         $app->redirect_to("/");    
+         $app->set_flash($e.getMessage());
+         $app->redirect_to("/");
     }
 });
 
@@ -228,7 +232,7 @@ post("/signin",function($app){
     }
     catch(Exception $e){
       $app->set_flash("Could not sign you in. Try again. {$e->getMessage()}");
-      $app->redirect_to("/signin");      
+      $app->redirect_to("/signin");
     }
   }
   else{
@@ -239,7 +243,7 @@ post("/signin",function($app){
   $app->redirect_to("/");
 });
 
-delete("/members/:id",function($app){ 
+delete("/members/:id",function($app){
   $id = $app->route_var('id');
   if(is_numeric($id)){
       $name = "UNKNOWN";
@@ -251,14 +255,14 @@ delete("/members/:id",function($app){
       }
       catch(Exception $e){
            $app->set_flash("Could not delete record. {$e->getMessage()}");
-           $app->redirect_to("/members");      
- 
+           $app->redirect_to("/members");
+
       }
       $app->set_flash("{$name} was deleted.");
       $app->redirect_to("/members");
   }
   else{
-     $app->reset_route();   
+     $app->reset_route();
   }
 });
 

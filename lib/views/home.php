@@ -3,20 +3,22 @@
 <p><?php echo $message ?></p>
 
 <?php
-if(!empty($users)){
+if(!empty($articles)){
+
    echo "<table border='1'>";
-   echo "<tr><th>ID</th> <th>Name</th><th colspan='3'>Actions</th></tr>";
-   foreach($users As $user){
-          echo "<tr><td>{$user['id']}</td> <td>{$user['name']}</td>
+   echo "<tr><th>article_id</th> <th>headline</th><th colspan='3'>Actions</th></tr>";
+   foreach($articles As $article){
+
+          echo "<tr><td>{$article['article_id']}</td> <td>{$article['headline']}</td>
           <td>
-             <form action='/member/{$user['id']}' method='GET'>
+             <form action='/member/{$article['article_id']}' method='GET'>
                 <input type='submit' value='Show' />
              </form>
 
 
           </td>
           <td>
-             <form action='/members/{$user['id']}' method='POST'>
+             <form action='/members/{$article['article_id']}' method='POST'>
                 <input type='hidden' name='_method' value='delete' />
                 <input class='delete' type='submit' value='Delete' />
              </form>
@@ -28,7 +30,7 @@ if(!empty($users)){
        echo "</table>";
 }
 else{
-  echo "<p>No Members yet</p>";
+  echo "<p>No articles yet</p>";
 }
 
 ?>

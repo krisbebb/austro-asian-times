@@ -5,7 +5,8 @@ class Article extends Database{
    public function is_db_empty(){
        $is_empty = false;
        try{
-          $query = "SELECT id FROM articles WHERE id=?";
+          $query = "SELECT article_id FROM articles WHERE id=?";
+
           if($statement = $this->prepare($query)){
              $id=1;
              $binding = array($id);
@@ -33,7 +34,7 @@ class Article extends Database{
 
     public function get_articles(){
        try{
-          $query = "SELECT id, headline FROM articles";
+          $query = "SELECT article_id, headline FROM articles";
           if($statement = $this->prepare($query)){
              $binding = array();
              if(!$statement -> execute($binding)){
@@ -55,4 +56,4 @@ class Article extends Database{
     }
 
 
-  
+  }
