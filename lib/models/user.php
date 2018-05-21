@@ -71,7 +71,7 @@ class User extends Database{
 
     public function get_users(){
        try{
-          $query = "SELECT id, login FROM journalists";
+          $query = "SELECT * FROM journalists";
           if($statement = $this->prepare($query)){
              $binding = array();
              if(!$statement -> execute($binding)){
@@ -93,14 +93,14 @@ class User extends Database{
     }
 
 
-    public function sign_up($user_name, $password, $password_confirm){
+    public function sign_up($user_name, $firstname, $lastname, $password, $password_confirm){
        try{
          if($this->validate_user_name($user_name) && $this->validate_passwords($password,$password_confirm)){
               $salt = $this->generate_salt();
               $password_hash = $this->generate_password_hash($password,$salt);
-              $query = "INSERT INTO journalists (login,salt,hashed_password) VALUES (?,?,?)";
+              $query = "INSERT INTO journalists (login,firstname,lastname,salt,hashed_password) VALUES (?,?,?,?,?)";
               if($statement = $this->prepare($query)){
-                 $binding = array($user_name,$salt,$password_hash);
+                 $binding = array($user_name,$firstname,$lastname,$salt,$password_hash);
                  if(!$statement -> execute($binding)){
                      throw new Exception("Could not execute query.");
                  }

@@ -234,12 +234,14 @@ post("/signup",function($app){
         $user = new User();
         if($user->is_authenticated() || $user->is_db_empty()){
           $name = $app->form('name');
+          $fname = $app->form('firstname');
+          $lname = $app->form('lastname');
           $pw = $app->form('password');
           $confirm = $app->form('password-confirm');
 
           if($name && $pw && $confirm){
               try{
-                $user->sign_up($name,$pw,$confirm);
+                $user->sign_up($name,$fname,$lname,$pw,$confirm);
                 $app->set_flash(htmlspecialchars($app->form('name'))." is now signed up ");
              }
              catch(Exception $e){
