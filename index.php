@@ -185,10 +185,13 @@ get("/signout",function($app){
 get("/add_article",function($app){
   $app->force_to_https("/add_article");
   $app->set_message("title","Add News Article");
+
   try{
     $user = new User();
     if($user->is_authenticated()){
        $app->set_message("authenticated",true);
+
+       $app->set_message("error","User ID is ".$user->get_user_id());
      }
      $article = new Article();
      $results = $article->get_articles();
@@ -306,7 +309,35 @@ delete("/members/:id",function($app){
      $app->reset_route();
   }
 });
+post("/add_article",function($app){
+  $headline = $app->form('headline');
+  $data = $app->form('data');
+  if($headline && $data){
+    try{
+       $user = new User();
+       $created_by = $user->get_user_id();
+    }
+    catch(Exception $e){
+      $app->set_flash("Could not get current user {$e->getMessage()}");
+      $app->redirect_to("/add_article");
+    }
 
+    try{
+       $article = new Article();
+       $article->add_article($headline,$data,$created_by);
+    }
+    catch(Exception $e){
+      $app->set_flash("Error adding article. {$e->getMessage()}");
+      $app->redirect_to("/add_article");
+    }
+  }
+  else{
+       $app->set_flash("Something wrong with headline or data. Try again.");
+       $app->redirect_to("/add_article");
+  }
+  $app->set_flash("Success! Article has been added");
+  $app->redirect_to("/");
+});
 
 
 resolve();

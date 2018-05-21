@@ -55,6 +55,24 @@ class Article extends Database{
            throw new Exception($e->getMessage());
        }
     }
+    public function add_article($headline, $data, $created_by){
+      try{
 
+        $query = "INSERT INTO articles (headline,data,created_by) VALUES (?,?,?)";
+        if($statement = $this->prepare($query)){
+           $binding = array($headline,$data,$created_by);
+           if(!$statement -> execute($binding)){
+               throw new Exception("Could not execute query.");
+           }
+        }
+        else{
+          throw new Exception("Could not prepare statement.");
+
+        }
+      }
+      catch(Exception $e){
+          throw new Exception($e->getMessage());
+      }
+    }
 
   }
