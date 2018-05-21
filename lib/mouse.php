@@ -38,29 +38,29 @@ class Mouse{
     private $route_segments = array();
     private $route_variables = array();
 
-    
+
     public static function get_instance(){
         if(!isset(self::$instance)){
             self::$instance = new Mouse();
         }
         return self::$instance;
     }
-    
+
     protected function __construct(){
         $this->route = $this->get_route();
         $this->method = $this->get_method();
-        
+
         /* NEW for complex routes */
-        $this->route_segments = explode("/",trim($this->route,"/"));        
+        $this->route_segments = explode("/",trim($this->route,"/"));
     }
-    
+
     public function get_route(){
-      return $_SERVER['REQUEST_URI'];  
+      return $_SERVER['REQUEST_URI'];
     }
- 
+
 
     /* Modified register method to handle complex routes */
-    
+
     public static function register($route,$callback, $method){
        if(!static::$route_found){
           $application = static::get_instance();
@@ -82,7 +82,7 @@ class Mouse{
                   else{
                      //Means routes don't match
                      $matched = false;
-                  }           
+                  }
                 }
              }
           }
@@ -97,20 +97,20 @@ class Mouse{
             static::$route_found = true;
             echo $callback($application);
           }
-       }     
-    }   
+       }
+    }
 
     /* New function which accepts $key and returns the value of the route in route_variables*/
     public function route_var($key){
         return $this->route_variables[$key];
     }
-    
+
     public function render($layout, $content){
 
        foreach($this->messages As $key => $val){
             $$key = $val;
        }
-       
+
 
        $flash = $this->get_flash();
 
@@ -128,7 +128,7 @@ class Mouse{
     public function get_request(){
       return $_SERVER['REQUEST_URI'];
     }
-    
+
     public function is_https(){
         if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']==='on'){
             return true;
@@ -156,11 +156,11 @@ class Mouse{
 
     public function get_method(){
        $request_method = "GET";
-       
+
        if(!empty($_SERVER['REQUEST_METHOD'])){
              $request_method = strtoupper($_SERVER['REQUEST_METHOD']);
        }
-              
+
        if($request_method === "POST"){
            if(strtoupper($this->form("_method")) === "POST"){
               return "POST";
@@ -170,7 +170,7 @@ class Mouse{
            }
            if(strtoupper($this->form("_method")) === "DELETE"){
               return "DELETE";
-           }   
+           }
           return "POST";
        }
        if($request_method === "PUT"){
@@ -179,8 +179,8 @@ class Mouse{
 
        if($request_method === "DELETE"){
             return "DELETE";
-       }           
- 
+       }
+
        return "GET";
     }
 
@@ -222,15 +222,15 @@ class Mouse{
     }
 
     public function get_flash(){
-          return $this->get_session_message("flash");   
+          return $this->get_session_message("flash");
     }
-    
+
 
     public function set_message($key,$value){
       $this->messages[$key] = $value;
     }
 
- 
+
     public static function resolve(){
       if(!static::$route_found){
         $application = static::get_instance();
@@ -244,7 +244,3 @@ class Mouse{
        static::$route_found	= false;
    }
 }
-
-
-
-

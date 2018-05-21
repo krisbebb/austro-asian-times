@@ -21,7 +21,7 @@
             <td>{$user['lastname']}</td>
             <td>{$user['privilege']}</td>
             <td>
-               <form action='/member/{$user['id']}' method='GET'>
+               <form action='/member/{$user['id']}' method='POST'>
                   <input type='submit' value='Show' />
                </form>
             </td>

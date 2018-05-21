@@ -73,11 +73,12 @@ get("/members",function($app){
    $app->render(LAYOUT,"members");
 });
 
-get("/member/:id",function($app){
+post("/member/:id",function($app){
   $id = $app->route_var('id');
+
   if(is_numeric($id)){
 
-       $app->force_to_https("/member/{$id}");
+       $app->force_to_https("/member");
        $name="";
 
        try{
@@ -104,11 +105,12 @@ get("/member/:id",function($app){
 
        $app->set_message("title","Members");
        $app->set_message("name",$name);
+
        $app->render(LAYOUT,"member");
   }
   else{
      $app->reset_route();
-  }
+    }
 });
 
 get("/signin",function($app){
