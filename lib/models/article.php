@@ -32,39 +32,31 @@ class Article extends Database{
 
     }
     public function get_article($id){
-
-
       if(empty($id)){
         throw new Exception("article_id has no valid id");
       }
 
       try{
-         $query = "SELECT headline FROM articles WHERE article_id=?";
+         $query = "SELECT headline, data, created_at, updated_at, firstname, lastname from articles, journalists
+WHERE articles.created_by = journalists.id AND article_id=?";
          if($statement = $this->prepare($query)){
             $binding = array($id);
             if(!$statement -> execute($binding)){
-
-                    throw new Exception("Could not execute query.");
+              throw new Exception("Could not execute query.");
             }
             else{
-               $result = $statement->fetch(PDO::FETCH_ASSOC);
-               $name = $result['headline'];
-            
-
+               $results = $statement->fetch(PDO::FETCH_ASSOC);
+               return $results;
             }
-         }
-         else{
-
+          }
+          else{
                throw new Exception("Could not prepare statement.");
          }
-
       }
       catch(Exception $e){
-
-         throw new Exception($e->getMessage());
+        throw new Exception($e->getMessage());
       }
-      return $name;
-   }
+    }
 
 
     public function get_articles(){

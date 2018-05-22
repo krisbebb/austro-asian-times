@@ -115,21 +115,14 @@ post("/member/:id",function($app){
 
 get("/story/:art_id",function($app){
   $id = $app->route_var('art_id');
-  error_log("routevar");
-error_log($id);
   if(is_numeric($id)){
       $app->force_to_http("/");
       // $app->force_to_https("/story");
-       $story_title="";
+       $results="";
 
        try{
          $article = new Article();
-
-
-             $story_title = $article->get_article($id);
-
-
-
+         $results = $article->get_article($id);
 
        }
        catch(Exception $e){
@@ -138,7 +131,7 @@ error_log($id);
        }
 
        $app->set_message("title","Story");
-       $app->set_message("story",$story_title);
+       $app->set_message("story",$results);
 
        $app->render(LAYOUT,"story");
 
