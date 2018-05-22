@@ -55,7 +55,10 @@ class Mouse{
     }
 
     public function get_route(){
+      error_log("getroute");
+      error_log($_SERVER['REQUEST_URI']);
       return $_SERVER['REQUEST_URI'];
+
     }
 
 
@@ -127,6 +130,7 @@ class Mouse{
 
     public function get_request(){
       return $_SERVER['REQUEST_URI'];
+
     }
 
     public function is_https(){

@@ -113,6 +113,43 @@ post("/member/:id",function($app){
     }
 });
 
+post("/story/:art_id",function($app){
+  $id = $app->route_var('art_id');
+  error_log("routevar");
+error_log($id);
+  if(is_numeric($id)){
+
+       // $app->force_to_https("/story");
+       $story_title="";
+
+       try{
+         $article = new Article();
+
+
+             $story_title = $article->get_article($id);
+
+
+
+
+       }
+       catch(Exception $e){
+             $app->set_flash("error, ",$e->getMessage());
+             $app->redirect_to('/home');
+       }
+
+       $app->set_message("title","Story");
+       $app->set_message("story",$story_title);
+
+       $app->render(LAYOUT,"story");
+
+
+  }
+  else{
+
+     $app->reset_route();
+    }
+});
+
 get("/signin",function($app){
    $app->force_to_https("/signin");
    $app->set_message("title","Sign in");

@@ -6,7 +6,8 @@
 if(!empty($articles)){
 
    echo "<table border='1'>";
-   echo "<tr><th>article_id</th> <th>headline</th>
+   echo "<tr><th>article_id</th>
+   <th>headline</th>
    <th>created_by</th>
    <th>created_at</th>
    <th>updated_at</th>
@@ -17,7 +18,10 @@ if(!empty($articles)){
 
    foreach($articles As $article){
 
-          echo "<tr><td>{$article['article_id']}</td> <td>{$article['headline']}</td>
+          echo "<tr><td>{$article['article_id']}</td>
+          <td><form action='/story/{$article['article_id']}' method='POST'>
+             <input type='submit' value='{$article['headline']}' />
+          </form></td>
           <td>{$article['created_by']}</td>
           <td>{$article['created_at']}</td>
           <td>{$article['updated_at']}</td>
