@@ -19,9 +19,7 @@ if(!empty($articles)){
    foreach($articles As $article){
 
           echo "<tr><td>{$article['article_id']}</td>
-          <td><form action='/story/{$article['article_id']}' method='POST'>
-             <input type='submit' value='{$article['headline']}' />
-          </form></td>
+          <td><a href = 'story/{$article['article_id']}'>{$article['headline']}</a></td>
           <td>{$article['created_by']}</td>
           <td>{$article['created_at']}</td>
           <td>{$article['updated_at']}</td>

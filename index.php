@@ -113,13 +113,13 @@ post("/member/:id",function($app){
     }
 });
 
-post("/story/:art_id",function($app){
+get("/story/:art_id",function($app){
   $id = $app->route_var('art_id');
   error_log("routevar");
 error_log($id);
   if(is_numeric($id)){
-
-       // $app->force_to_https("/story");
+      $app->force_to_http("/");
+      // $app->force_to_https("/story");
        $story_title="";
 
        try{
