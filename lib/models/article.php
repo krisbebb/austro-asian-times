@@ -38,7 +38,7 @@ class Article extends Database{
 
       try{
          $query = "SELECT headline, data, created_at, updated_at, firstname, lastname from articles, journalists
-WHERE articles.created_by = journalists.id AND article_id=?";
+         WHERE articles.created_by = journalists.id AND article_id=?";
          if($statement = $this->prepare($query)){
             $binding = array($id);
             if(!$statement -> execute($binding)){
