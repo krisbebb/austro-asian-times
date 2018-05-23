@@ -37,7 +37,8 @@ class Article extends Database{
       }
 
       try{
-         $query = "SELECT headline, data, created_at, updated_at, firstname, lastname from articles, journalists
+
+         $query = "SELECT * from articles, journalists
          WHERE articles.created_by = journalists.id AND article_id=?";
          if($statement = $this->prepare($query)){
             $binding = array($id);
@@ -101,5 +102,34 @@ class Article extends Database{
           throw new Exception($e->getMessage());
       }
     }
+    public function get_tags($id){
+    try{
+      $query = "SELECT tag_text FROM articles, article_tags, tags WHERE articles.article_id=? AND article_tags.article_id=articles.article_id AND article_tags.tag_id=tags.tag_id GROUP BY tag_text";
+      if($statement = $this->prepare($query)){
+         $binding = array($id);
+         if(!$statement -> execute($binding)){
+           throw new Exception("Could not execute query.");
+         }
+         else{
+           $i=1;
+            while ($results = $statement->fetch(PDO::FETCH_ASSOC)){
 
+              foreach ($results as $key=>$data){
+              $results_array[$i] = $data;
+              error_log("{$key} {$data}");
+              $i++;
+              }
+            }
+            return $results_array;
+         }
+
+       }
+       else{
+            throw new Exception("Could not prepare statement.");
+      }
+   }
+   catch(Exception $e){
+     throw new Exception($e->getMessage());
+   }
+    }
   }

@@ -123,6 +123,7 @@ get("/story/:art_id",function($app){
        try{
          $article = new Article();
          $results = $article->get_article($id);
+         $tags = $article->get_tags($id);
 
        }
        catch(Exception $e){
@@ -132,6 +133,7 @@ get("/story/:art_id",function($app){
 
        $app->set_message("title","Story");
        $app->set_message("story",$results);
+       $app->set_message("tags",$tags);
 
        $app->render(LAYOUT,"story");
 
