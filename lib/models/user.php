@@ -38,7 +38,33 @@ class User extends Database{
         return false;
 
    }
+   public function is_admin(){
+     session_start();
+     if(!empty($_SESSION["id"])){
+        $id = $_SESSION["id"];
+      }
+     session_write_close();
+     try{
+        $query = "SELECT privilege FROM journalists WHERE id=?";
+        if($statement = $this->prepare($query)){
+          $binding = array($id);
+          if(!$statement -> execute($binding)){
+             return false;
+          }
+          else{
+              $result = $statement->fetch(PDO::FETCH_ASSOC);
+              if($result['privilege'] == '2'){
+                return true;
+              }
+          }
+        }
 
+     }
+     catch(Exception $e){
+        throw new Exception("Cannot check privilege level. {$e->getMessage()}");
+     }
+     return false;
+   }
 
    public function is_db_empty(){
        $is_empty = false;

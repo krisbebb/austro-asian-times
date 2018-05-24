@@ -31,11 +31,14 @@ get("/",function($app){
      if($user->is_authenticated()){
         $app->set_message("authenticated",true);
       }
+      if($user->is_admin()){
+        $app->set_message("is_admin",true);
+      }
 	    $article = new Article();
       $results= $article->get_latest_articles();
 
 
-      
+
       $app->set_message("latest",$results);
     // $app->set_message("tags", $tags);
 
@@ -55,8 +58,9 @@ get("/members",function($app){
 
    try{
      $user = new User();
-     if($user->is_authenticated()){
+     if(($user->is_authenticated()) && ($user->is_admin())){
         $app->set_message("authenticated",true);
+        $app->set_message("is_admin",true);
         $results = $user->get_users();
         $app->set_message("users",$results);
      }
@@ -87,8 +91,9 @@ post("/member/:id",function($app){
 
        try{
          $user = new User();
-         if($user->is_authenticated()){
+         if(($user->is_authenticated()) && ($user->is_admin())){
              $app->set_message("authenticated",true);
+             $app->set_message("is_admin",true);
              $name = $user->get_user_name($app->route_var("id"));
              if(empty($name)){
 	            $name = "NO SUCH USER";
@@ -125,6 +130,14 @@ get("/story/:art_id",function($app){
        $results="";
 
        try{
+         $user = new User();
+         if($user->is_authenticated()){
+            $app->set_message("authenticated",true);
+          }
+          if ($user->is_admin()){
+            $app->set_message("is_admin",true);
+          }
+
          $article = new Article();
          $results = $article->get_article($id);
          $tags = $article->get_tags($id);
@@ -170,10 +183,12 @@ get("/signup",function($app){
     $app->force_to_https("/signup");
     $is_authenticated=false;
     $is_db_empty=false;
+    $is_admin = false;
 
     try{
        $user = new User();
        $is_authenticated = $user->is_authenticated();
+       $is_admin = $user->is_admin();
        $is_db_empty = $user->is_db_empty();
     }
     catch(Exception $e){
@@ -181,9 +196,10 @@ get("/signup",function($app){
        $app->redirect_to("/");
     }
 
-    if($is_authenticated){
-        $app->set_message("error","Create more accounts for other users.");
+    if($is_admin){
+        $app->set_flash("Create more accounts for other users.");
         $app->set_message("authenticated",$is_authenticated);
+        $app->set_message("is_admin",$is_admin);
     }
     else if(!$is_authenticated && $is_db_empty){
        $app->set_message("super_user",true);
@@ -230,6 +246,9 @@ get("/add_article",function($app){
        $app->set_message("authenticated",true);
 
        $app->set_message("error","User ID is ".$user->get_user_id());
+     }
+     if ($user->is_admin()){
+       $app->set_message("is_admin",true);
      }
      $article = new Article();
      $results = $article->get_articles();

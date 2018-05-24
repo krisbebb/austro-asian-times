@@ -13,16 +13,23 @@
 <?php
   if(!isset($super_user) && !$super_user){
      echo "<li><a href='/'>Home</a></li>";
-     if(isset($authenticated) && $authenticated){
-        echo "<li><a href='/members'>Members</a></li>";
-        echo "<li><a href='/signout'>Sign out</a></li>";
-        echo "<li><a href='/signup'>Sign up</a></li>";
-        echo "<li><a href='/add_article'>Add Article</a></li>";
+   }
+   if(isset($is_admin) && $is_admin){
+     echo "<li><a href='/members'>User Admin</a></li>";
+       echo "<li><a href='/signup'>Add User</a></li>";
      }
+     if(isset($authenticated) && $authenticated){
+       echo "<li><a href='/add_article'>Add Article</a></li>";
+       echo "<li><a href='/signout'>Sign out</a></li>";
+    }
+
+
+
+
      else{
         echo "<li><a href='/signin'>Sign in</a></li>";
      }
-  }
+
  ?>
 
 
