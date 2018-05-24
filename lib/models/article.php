@@ -83,6 +83,31 @@ class Article extends Database{
            throw new Exception($e->getMessage());
        }
     }
+
+    public function get_user_articles($id){
+       try{
+          // $query = "SELECT article_id, headline FROM articles";
+          $query = "SELECT * FROM articles WHERE created_by = ?";
+          if($statement = $this->prepare($query)){
+             $binding = array($id);
+             if(!$statement -> execute($binding)){
+                 throw new Exception("Could not execute query.");
+             }
+             else{
+                $results = $statement->fetchall(PDO::FETCH_ASSOC);
+                return $results;
+             }
+          }
+          else{
+            throw new Exception("Could not prepare statement.");
+
+          }
+
+       }
+       catch(Exception $e){
+           throw new Exception($e->getMessage());
+       }
+    }
     public function get_latest_articles(){
        try{
           // $query = "SELECT article_id, headline FROM articles";

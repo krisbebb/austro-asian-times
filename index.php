@@ -54,6 +54,51 @@ get("/",function($app){
    $app->render(LAYOUT,"home");
 });
 
+get("/my_articles", function($app){
+
+       $app->force_to_https("/my_articles");
+       $name = "";
+
+       try{
+         $user = new User();
+         $id = $user->get_user_id();
+         if($user->is_authenticated()){
+             $app->set_message("authenticated",true);
+             if($user->is_admin()){
+               $app->set_message("is_admin",true);
+             }
+
+             $article = new Article();
+             // error_log($name);
+             $results = $article->get_user_articles($id);
+             $name = $user->get_user_name($id);
+
+
+
+         }
+         else if($user->is_db_empty()){
+             $app->redirect_to('/signup');
+         }
+         else{
+	         $app->set_flash("You are not authorised to see Members pages. Sign in first.");
+             $app->redirect_to('/signin');
+         }
+       }
+       catch(Exception $e){
+             $app->set_flash("error, ",$e->getMessage());
+             $app->redirect_to('/home');
+       }
+
+       $app->set_message("title","Members");
+       $app->set_message("name",$name);
+       $app->set_message("stories",$results);
+
+       $app->render(LAYOUT,"member");
+
+
+});
+
+
 get("/members",function($app){
    $app->force_to_https("/members");
 
@@ -96,9 +141,14 @@ post("/member/:id",function($app){
              $app->set_message("authenticated",true);
              $app->set_message("is_admin",true);
              $name = $user->get_user_name($app->route_var("id"));
+             $article = new Article();
+             // error_log($name);
+             $results = $article->get_user_articles($id);
              if(empty($name)){
 	            $name = "NO SUCH USER";
-             }
+            }
+
+
          }
          else if($user->is_db_empty()){
              $app->redirect_to('/signup');
@@ -115,6 +165,7 @@ post("/member/:id",function($app){
 
        $app->set_message("title","Members");
        $app->set_message("name",$name);
+       $app->set_message("stories",$results);
 
        $app->render(LAYOUT,"member");
   }
