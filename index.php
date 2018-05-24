@@ -5,6 +5,7 @@ error_reporting(E_ERROR | E_PARSE);
 
 /* Set the path to the framework folder */
 DEFINE("LIB",$_SERVER['DOCUMENT_ROOT']."/lib/");
+// DEFINE("LIB",$_SERVER['DOCUMENT_ROOT']."/../lib");
 
 /* SET VIEW paths */
 DEFINE("VIEWS",LIB."views/");
