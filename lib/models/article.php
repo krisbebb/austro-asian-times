@@ -83,6 +83,29 @@ class Article extends Database{
            throw new Exception($e->getMessage());
        }
     }
+    public function get_latest_articles(){
+       try{
+          // $query = "SELECT article_id, headline FROM articles";
+          $query = "SELECT articles.headline, articles.article_id, GROUP_CONCAT(tag_text) as tags, updated_at FROM articles, article_tags, tags WHERE articles.article_id = article_tags.article_id AND article_tags.tag_id = tags.tag_id GROUP BY articles.headline ORDER BY updated_at DESC LIMIT 5";
+          if($statement = $this->prepare($query)){
+             $binding = array();
+             if(!$statement -> execute($binding)){
+                 throw new Exception("Could not execute query.");
+             }
+             else{
+                $results = $statement->fetchall(PDO::FETCH_ASSOC);
+                return $results;
+             }
+          }
+          else{
+            throw new Exception("Could not prepare statement.");
+
+          }
+       }
+       catch(Exception $e){
+           throw new Exception($e->getMessage());
+       }
+    }
     public function add_article($headline, $data, $created_by){
       try{
 
@@ -116,7 +139,7 @@ class Article extends Database{
 
               foreach ($results as $key=>$data){
               $results_array[$i] = $data;
-              error_log("{$key} {$data}");
+
               $i++;
               }
             }

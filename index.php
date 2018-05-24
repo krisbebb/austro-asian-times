@@ -25,15 +25,19 @@ require MOUSE;
 get("/",function($app){
    $app->force_to_http("/");
    $app->set_message("title","Home");
-   $app->set_message("message","Welcome");
+   $app->set_message("message","Latest Headlines");
    try{
      $user = new User();
      if($user->is_authenticated()){
         $app->set_message("authenticated",true);
       }
 	    $article = new Article();
-      $results = $article->get_articles();
-      $app->set_message("articles",$results);
+      $results= $article->get_latest_articles();
+
+
+      
+      $app->set_message("latest",$results);
+    // $app->set_message("tags", $tags);
 
    //   else if($user->is_db_empty()){
    //       $app->redirect_to('/signup');

@@ -55,9 +55,7 @@ class Mouse{
     }
 
     public function get_route(){
-      error_log("getroute");
-      error_log($_SERVER['REQUEST_URI']);
-      return $_SERVER['REQUEST_URI'];
+          return $_SERVER['REQUEST_URI'];
 
     }
 

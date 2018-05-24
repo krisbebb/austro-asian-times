@@ -1,14 +1,13 @@
-<h1>The Austro-Asian Times</h1>
 
-<p><?php echo $message ?></p>
+
+<h2><?php echo $message ?></h2>
 
 <?php
-if(!empty($articles)){
+if(!empty($latest)){
 
    echo "<table border='1'>";
-   echo "<tr><th>article_id</th>
-   <th>headline</th>
-   <th>created_by</th>
+   echo "<th>headline</th>
+   <th>Tags</th>
    <th>created_at</th>
    <th>updated_at</th>
 
@@ -16,14 +15,15 @@ if(!empty($articles)){
    // <th colspan='3'>Actions</th>
 
 
-   foreach($articles As $article){
+   foreach($latest As $story){
 
-          echo "<tr><td>{$article['article_id']}</td>
-          <td><a href = 'story/{$article['article_id']}'>{$article['headline']}</a></td>
-          <td>{$article['created_by']}</td>
-          <td>{$article['created_at']}</td>
-          <td>{$article['updated_at']}</td>
-          </tr>";
+
+        echo "<tr>
+        <td><a href = 'story/{$story['article_id']}'>{$story['headline']}</a></td>
+        <td>{$story['tags']}</td>
+        <td>{$story['created_at']}</td>
+        <td>{$story['updated_at']}</td>
+        </tr>";
        }
 
        // <td>

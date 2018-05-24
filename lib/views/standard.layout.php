@@ -32,6 +32,7 @@
 
 
 <div id='content'>
+  <h1>The Austro-Asian Times</h1>
 <?php
   if(!empty($flash)){
     echo "<p class='flash'>{$flash}</p>";
