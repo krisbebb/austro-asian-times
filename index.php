@@ -423,6 +423,8 @@ delete("/members/:id",function($app){
 post("/add_article",function($app){
   $headline = $app->form('headline');
   $data = $app->form('data');
+  $tags = $app->checkboxes('tags');
+
   if($headline && $data){
     try{
        $user = new User();
@@ -435,7 +437,13 @@ post("/add_article",function($app){
 
     try{
        $article = new Article();
-       $article->add_article($headline,$data,$created_by);
+       $article->add_article($headline,$data,$created_by,$tags);
+      
+       foreach($tags as $k=>$d){
+         error_log("key {$k}, data {$d}");
+
+       }
+       //
     }
     catch(Exception $e){
       $app->set_flash("Error adding article. {$e->getMessage()}");

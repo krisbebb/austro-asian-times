@@ -5,6 +5,8 @@
  <?php
     require PARTIALS."form.article.headline.php";
 	require PARTIALS."form.article.data.php";
+  require PARTIALS."form.article.tags.php";
+
  ?>
  <input type='submit' value='Submit' />
 </form>

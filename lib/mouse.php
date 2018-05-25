@@ -189,10 +189,17 @@ class Mouse{
     public function form($key){
        if(!empty($_POST[$key])){
           return $_POST[$key];
+
        }
        return false;
     }
+    public function checkboxes($key){
+      if(!empty($_POST[$key])){
+         return $_POST[$key];
 
+      }
+      return false;
+    }     
     public function redirect_to($path="/"){
        header("Location: {$path}");
        exit();

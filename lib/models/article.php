@@ -58,6 +58,33 @@ class Article extends Database{
         throw new Exception($e->getMessage());
       }
     }
+    public function get_article_id($headline){
+      if(empty($headline)){
+        throw new Exception("No valid headline");
+      }
+
+      try{
+
+         $query = "SELECT article_id from articles
+         WHERE headline = ?";
+         if($statement = $this->prepare($query)){
+            $binding = array($headline);
+            if(!$statement -> execute($binding)){
+              throw new Exception("Could not execute query.");
+            }
+            else{
+               $results = $statement->fetch(PDO::FETCH_ASSOC);
+               return $results;
+            }
+          }
+          else{
+               throw new Exception("Could not prepare statement.");
+         }
+      }
+      catch(Exception $e){
+        throw new Exception($e->getMessage());
+      }
+    }
 
 
     public function get_articles(){
@@ -131,7 +158,7 @@ class Article extends Database{
            throw new Exception($e->getMessage());
        }
     }
-    public function add_article($headline, $data, $created_by){
+    public function add_article($headline, $data, $created_by, $tags){
       try{
 
         $query = "INSERT INTO articles (headline,data,created_by) VALUES (?,?,?)";
@@ -140,16 +167,42 @@ class Article extends Database{
            if(!$statement -> execute($binding)){
                throw new Exception("Could not execute query.");
            }
-        }
-        else{
-          throw new Exception("Could not prepare statement.");
+         }else{
+          throw new Exception("Could not prepare insert statement.");
 
         }
       }
+
       catch(Exception $e){
           throw new Exception($e->getMessage());
       }
-    }
+      try{
+
+        $query = "SELECT article_id FROM articles WHERE headline = ? AND data = ? AND created_by = ?";
+        if($statement = $this->prepare($query)){
+           $binding = array($headline,$data,$created_by);
+           if(!$statement -> execute($binding)){
+               throw new Exception("Could not execute query.");
+           }
+         } else{
+          throw new Exception("Could not prepare select statement.");
+
+        }
+          $art_id = $statement->fetchall(PDO::FETCH_ASSOC);
+          foreach($art_id as $art){
+            foreach($tags as $k=>$d){
+        $this->add_tags($art['article_id'],$d);
+        error_log("adding tags {$art['article_id']}, {$d}");
+      }
+      }
+      }
+
+      catch(Exception $e){
+          throw new Exception($e->getMessage());
+      }
+
+  }
+
     public function get_tags($id){
     try{
       $query = "SELECT tag_text FROM articles, article_tags, tags WHERE articles.article_id=? AND article_tags.article_id=articles.article_id AND article_tags.tag_id=tags.tag_id GROUP BY tag_text";
@@ -179,5 +232,25 @@ class Article extends Database{
    catch(Exception $e){
      throw new Exception($e->getMessage());
    }
+    }
+
+    public function add_tags($id,$tags){
+      try{
+
+        $query = "INSERT INTO article_tags (article_id,tag_id) VALUES (?,?)";
+        if($statement = $this->prepare($query)){
+           $binding = array($id,$tags);
+           if(!$statement -> execute($binding)){
+               throw new Exception("Could not execute query.");
+           }
+        }
+        else{
+          throw new Exception("Could not prepare statement.");
+
+        }
+      }
+      catch(Exception $e){
+          throw new Exception($e->getMessage());
+      }
     }
   }

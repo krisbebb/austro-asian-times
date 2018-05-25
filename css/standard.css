@@ -61,3 +61,10 @@ input{
 input[type=submit]{
   margin-top: 1em;
 }
+
+input#tags {
+    display: inline-block;
+
+  
+
+}
