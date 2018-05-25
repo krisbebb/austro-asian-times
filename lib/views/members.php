@@ -42,4 +42,5 @@
   }
 
 ?>
-</ul>
+</br>
+<a class="button" href="/signup">Add new staff</a>

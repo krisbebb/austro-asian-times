@@ -16,11 +16,11 @@
    }
    if(isset($is_admin) && $is_admin){
      echo "<li><a href='/members'>User Admin</a></li>";
-       echo "<li><a href='/signup'>Add User</a></li>";
+       // echo "<li><a href='/signup'>Add User</a></li>";
      }
      if(isset($authenticated) && $authenticated){
        echo "<li><a href='/my_articles'>My Articles</a></li>'";
-       echo "<li><a href='/add_article'>Add Article</a></li>";
+       // echo "<li><a href='/add_article'>Add Article</a></li>";
        echo "<li><a href='/signout'>Sign out</a></li>";
     }
 
@@ -67,6 +67,9 @@
 <!-- Is there a better place to put the scripts? -->
 <script src="/js/jquery-1.9.1.js" type="text/javascript"></script>
 <script src="/js/delete.js" type="text/javascript"></script>
+<script src="/js/delete_article.js" type="text/javascript"></script>
+
+
 
 </body>
 </html>

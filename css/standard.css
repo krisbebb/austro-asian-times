@@ -65,6 +65,7 @@ input[type=submit]{
 input#tags {
     display: inline-block;
 
-  
-
+  }
+input#admin {
+  display: inline-block;
 }

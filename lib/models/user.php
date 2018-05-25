@@ -285,7 +285,29 @@ class User extends Database{
       return true;
     }
 
+public function set_privilege($login){
+  try {
 
+
+  $query = "UPDATE journalists SET privilege = '2' WHERE login = ?";
+  if($statement = $this->prepare($query)){
+     $binding = array($login);
+     if(!$statement -> execute($binding)){
+             throw new Exception("Could not execute query.");
+     }
+
+
+  } else {
+    throw new Exception("Could not prepare statement.");
+  }
+}
+
+
+
+       catch(Exception $e){
+           throw new Exception($e->getMessage());
+       }
+}
 
     public function sign_out(){
         session_start();
