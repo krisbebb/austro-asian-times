@@ -15,7 +15,7 @@
      echo "<li><a href='/'>Home</a></li>";
    }
    if(isset($is_admin) && $is_admin){
-     echo "<li><a href='/members'>User Admin</a></li>";
+     echo "<li><a href='/members'>Users</a></li>";
        // echo "<li><a href='/signup'>Add User</a></li>";
      }
      if(isset($authenticated) && $authenticated){

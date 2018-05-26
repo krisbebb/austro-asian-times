@@ -190,11 +190,19 @@ class User extends Database{
 
 
     public function delete_user($id){
+      session_start();
+      if(!empty($_SESSION["id"])){
+         $current_id = $_SESSION["id"];
+       }
+      session_write_close();
        if(empty($id)){
          throw new Exception("User has no valid id");
        }
        if(!empty($id) && $id=="1"){
          throw new Exception("Cannot delete super user!");
+       }
+       if($id == $current_id){
+         throw new Exception("Cannot delete yourself!");
        }
 
        try{

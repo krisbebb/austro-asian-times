@@ -585,7 +585,7 @@ post("/change",function($app){
 delete("/story/:id",function($app){
   $id = $app->route_var('id');
   if(is_numeric($id)){
-      $name = "UNKNOWN";
+    
 
       try{
         $article = new Article();
