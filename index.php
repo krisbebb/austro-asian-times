@@ -5,7 +5,7 @@ error_reporting(E_ERROR | E_PARSE);
 
 /* Set the path to the framework folder */
 DEFINE("LIB",$_SERVER['DOCUMENT_ROOT']."/lib/");
-// DEFINE("LIB",$_SERVER['DOCUMENT_ROOT']."/../lib");
+// DEFINE("LIB",$_SERVER['DOCUMENT_ROOT']."/../lib/");
 
 /* SET VIEW paths */
 DEFINE("VIEWS",LIB."views/");
@@ -521,7 +521,7 @@ post("/edit_article",function($app){
   $data = $app->form('data');
   $tags = $app->checkboxes('tags');
 
-  if($headline && $data ){
+  if($data && $tags ){
     try{
        $user = new User();
        $created_by = $user->get_user_id();
