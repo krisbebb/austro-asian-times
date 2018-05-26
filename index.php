@@ -25,7 +25,7 @@ require MOUSE;
 
 get("/",function($app){
    $app->force_to_http("/");
-   $app->set_message("title","Home");
+   $app->set_message("title","The Austro-Asian Times");
    $app->set_message("message","Latest Headlines");
    try{
      $user = new User();
@@ -585,7 +585,7 @@ post("/change",function($app){
 delete("/story/:id",function($app){
   $id = $app->route_var('id');
   if(is_numeric($id)){
-    
+
 
       try{
         $article = new Article();

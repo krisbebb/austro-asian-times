@@ -51,7 +51,7 @@
   require $content;
 ?>
 </div> <!-- end content -->
-<footer>
+<div id="footer">
 <?php
   if(isset($authenticated) && $authenticated){
      echo "<p>Signed in</p>";
@@ -61,7 +61,7 @@
 
   }
 ?>
-</footer>
+</div> <!-- end footer -->
 </div> <!-- end main -->
 
 <!-- Is there a better place to put the scripts? -->

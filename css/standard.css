@@ -8,14 +8,13 @@ body{
    font-family:Arial;
 }
 
-footer{
+#footer{
    background:#666;
    color:#eee;
-   font-size:0.5em;
+   font-size:0.8em;
    text-align:right;
    padding:0.25em;
 }
-
 
 #content{
   clear:both;

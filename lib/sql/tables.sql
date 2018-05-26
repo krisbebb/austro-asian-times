@@ -1,60 +1,3 @@
-←
- phpMyAdmin
-HomeEmpty session dataphpMyAdmin documentationDocumentationNavigation panel settingsReload navigation panel
-RecentFavorites
-Collapse allUnlink from main panel
-New
-Expand/CollapseDatabase operationsairports_db
-Database operationsblogs_db
-NewNew
-Expand/CollapseStructureusers
-Expand/CollapseDatabase operationsbooks_db
-Expand/CollapseDatabase operationsfriendships
-Expand/CollapseDatabase operationsinformation_schema
-Expand/CollapseDatabase operationsmysql
-Database operationsnews_db
-NewNew
-Structurearticles
-Expand/Collapse
-Columns Columns
-Expand/Collapse
-Indexes Indexes
-Expand/CollapseStructurearticle_tags
-Expand/CollapseStructurejournalists
-Structuretags
-
-Columns Columns
-NewNew
-Columntag_id
-Columntag_text
-Expand/Collapse
-Indexes Indexes
-Expand/CollapseDatabase operationsperformance_schema
-Expand/CollapseDatabase operationsplayers_db
-Server: localhost:8889 »Database: news_db
-Structure Structure
-SQL SQL
-Search Search
-Query Query
-Export Export
-Import Import
-Operations Operations
-Privileges Privileges
-Routines Routines
-Events Events
-Triggers Triggers
-Designer Designer
-Click on the bar to scroll to top of page
-SQL Query Console Console
-ascending descending Order: Debug SQL Execution order Time taken Order by: Group queries
-Options Set default
- Always expand query messages
- Show query history at start
- Show current browsing query
-  Execute queries on Enter and insert new line with Shift + Enter. To make this permanent, view settings.
- Switch to dark theme
-[ Back ]
-
 
 -- phpMyAdmin SQL Dump
 -- version 4.7.7
@@ -63,7 +6,7 @@ Options Set default
 -- Host: localhost:8889
 -- Generation Time: May 26, 2018 at 03:13 AM
 -- Server version: 5.6.38
--- PHP Version: 7.2.1
+-- PHP Version: 7.2.1 Q8BUAb#EHfh
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -171,19 +114,19 @@ ALTER TABLE `tags`
 -- AUTO_INCREMENT for table `articles`
 --
 ALTER TABLE `articles`
-  MODIFY `article_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `article_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
 -- AUTO_INCREMENT for table `journalists`
 --
 ALTER TABLE `journalists`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
 -- AUTO_INCREMENT for table `tags`
 --
 ALTER TABLE `tags`
-  MODIFY `tag_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `tag_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
 -- Constraints for dumped tables
