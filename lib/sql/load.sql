@@ -1,13 +1,8 @@
--- Dumping data for table `journalists`
---
 
 INSERT INTO `journalists` (`id`, `login`, `firstname`, `lastname`, `privilege`, `hashed_password`, `salt`) VALUES
 (1, 'admin', 'Peter', 'Parker', 2, 'f1c827fb69dfc45fe7f8779c9a828b5b5db267f8dee71c18555c8fcf63870182', '09E21687DA54C3FB'),
 (2, 'journo1', 'Ray', 'Martinez', 1, '8aa9d9f29afbf223d747e2cba8a4b662f7d6382c49d37b3ff46c2043230785c1', '1289450D67AECFB3');
 
---
--- Dumping data for table `tags`
---
 
 INSERT INTO `tags` (`tag_id`, `tag_text`) VALUES
 (1, 'Australia'),
@@ -15,10 +10,6 @@ INSERT INTO `tags` (`tag_id`, `tag_text`) VALUES
 (3, 'Technology'),
 (4, 'Sport'),
 (5, 'General');
-
---
--- Dumping data for table `articles`
---
 
 INSERT INTO `articles` (`article_id`, `headline`, `data`, `created_by`, `created_at`, `updated_at`) VALUES
 (1, 'Canadian Royal Wedding', '  In sodales pulvinar massa, at bibendum augue suscipit sed. Integer pharetra lectus vitae massa tempus, eu euismod velit interdum. Suspendisse efficitur nec libero ut dapibus. Ut a purus turpis. Praesent molestie elit id tortor vulputate, eleifend accumsan magna bibendum. Quisque pretium porta mauris et maximus. Vestibulum id varius purus, in pulvinar quam. In laoreet urna placerat erat rhoncus lacinia. In hac habitasse platea dictumst.\r\n\r\n', 1, '2018-05-26 03:27:53', '2018-05-26 04:44:07'),
@@ -29,8 +20,6 @@ INSERT INTO `articles` (`article_id`, `headline`, `data`, `created_by`, `created
 (6, 'Nuclear War Imminent', '  Integer a sodales justo. Etiam fringilla maximus lectus, eget lobortis augue consectetur pretium. Proin ut odio et leo auctor luctus. Suspendisse lacinia pellentesque aliquet. Vestibulum finibus, metus sit amet venenatis facilisis, nisi mi luctus arcu, ut aliquam enim arcu id nunc. Integer odio nibh, euismod vitae eros vel, ultricies maximus urna. Praesent non laoreet odio, et ullamcorper neque. Praesent dui nibh, accumsan sit amet lorem non, tincidunt pretium ante. Etiam vulputate turpis justo, nec venenatis est ultricies vitae. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Morbi aliquet urna quam, eget convallis nisl molestie ac.', 2, '2018-05-26 03:32:05', '2018-05-26 04:48:22'),
 (7, 'Eggs are Bad Again', '  Nullam ultricies neque a metus congue, vitae venenatis orci molestie. Maecenas feugiat massa id sapien auctor cursus sed iaculis magna. Donec et condimentum tellus. Morbi commodo ligula a turpis pellentesque, eu blandit est efficitur. Maecenas sit amet neque odio. Nullam efficitur feugiat ex id finibus. Maecenas fermentum imperdiet odio a iaculis. Suspendisse lobortis elit purus, id maximus mi feugiat sit amet. Phasellus tristique tortor ut dui rutrum, in interdum tellus consectetur. Vivamus euismod tortor vel malesuada consequat. Aliquam vulputate at ligula non elementum. Nunc vehicula ut urna a hendrerit. Vestibulum risus arcu, malesuada sit amet scelerisque vitae, porta non massa. Mauris faucibus nisl in tellus mollis auctor. Morbi quis ligula aliquet, tincidunt libero non, consequat quam. Cras convallis enim quis metus faucibus placerat.', 2, '2018-05-26 03:32:35', '2018-05-26 04:48:33');
 
--- Dumping data for table `article_tags`
---
 
 INSERT INTO `article_tags` (`article_id`, `tag_id`) VALUES
 (2, 1),
