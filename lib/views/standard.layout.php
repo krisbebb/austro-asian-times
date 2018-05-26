@@ -20,7 +20,7 @@
      }
      if(isset($authenticated) && $authenticated){
        echo "<li><a href='/my_articles'>My Articles</a></li>'";
-       // echo "<li><a href='/add_article'>Add Article</a></li>";
+       echo "<li><a href='/change'>Change Password</a></li>";
        echo "<li><a href='/signout'>Sign out</a></li>";
     }
 

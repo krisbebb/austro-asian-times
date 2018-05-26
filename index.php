@@ -356,6 +356,19 @@ get("/add_article",function($app){
 
   $app->render(LAYOUT,"add_article");
 });
+
+get("/change",function($app){
+  $user = new User();
+  if($user->is_authenticated()){
+     $app->set_message("authenticated",true);
+   }
+   if($user->is_admin()){
+     $app->set_message("is_admin",true);
+   }
+   $app->force_to_https("/change");
+   $app->set_message("title","Change password");
+   $app->render(LAYOUT,"change_password");
+});
 //
 //    $app->force_to_https("/add_article");
 //    $app->set_message("title","Add News Article");
@@ -542,6 +555,33 @@ post("/edit_article",function($app){
   $app->set_flash("Success! Article has been edited");
   $app->redirect_to("/");
 });
+
+post("/change",function($app){
+  $oldpw = $app->form("old-password");
+  $newpw = $app->form("password");
+  $pw_confirm = $app->form("password-confirm");
+
+  if($oldpw && $newpw && $pw_confirm){
+    try{
+       $user = new User();
+       $id = $user->get_user_id();
+       error_log("This current user is {$id}");
+       $user->change_password($id, $oldpw, $newpw, $pw_confirm);
+    }
+    catch(Exception $e){
+      $app->set_flash("Try again! {$e->getMessage()}");
+      $app->redirect_to("/change");
+    }
+  } else{
+           $app->set_flash("Please complete all fields.");
+           $app->redirect_to("/change");
+      }
+      $app->set_flash("Lovely, you are now signed in!");
+      $app->redirect_to("/");
+
+
+});
+
 delete("/story/:id",function($app){
   $id = $app->route_var('id');
   if(is_numeric($id)){

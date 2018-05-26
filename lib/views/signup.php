@@ -4,6 +4,7 @@
  <input type='hidden' name='_method' value='post' />
  <?php
     require PARTIALS."form.name.php";
+    require PARTIALS."form.admin.php";
     require PARTIALS."form.firstname.php";
     require PARTIALS."form.lastname.php";
 	require PARTIALS."form.password.php";

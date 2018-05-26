@@ -1,9 +1,12 @@
-<label for='headline'>Headline</label>
-<input type='text' id='headline' name='headline'
+
+
 <?php
-if ($story['headline']){
+
+if (!$story['headline']){
+  echo "<label for='headline'>Headline</label>";
+  echo  "<input type='text' id='headline' name='headline' autofocus/>";
+} else {
   error_log($story['headline']);
-echo "value = \"{$story['headline']}\"";
+echo "{$story['headline']}";
 }
 ?>
- autofocus/>

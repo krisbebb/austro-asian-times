@@ -282,6 +282,27 @@ class User extends Database{
 
     public function validate_password($password){
       //Does the password pass the strong password tests
+      //Check between 8 and 255 letters, numbers or punctuation marks
+      if(!preg_match("/^[\w\s\W]{8,255}$/",$password)){
+        return false;
+      }
+      //Check if at least one number is included
+      if(!preg_match("/\d/",$password)){
+        return false;
+      }
+      //Check if it contains at least one punctuation (non-alpha mark)
+      if(!preg_match("/\W/",$password)){
+        return false;
+      }
+      //Check if it contains at least one uppercase character
+      if(!preg_match("/[A-Z]/",$password)){
+        return false;
+      }
+      //Check if it contains at least one lowercase letter
+      if(!preg_match("/[a-z]/",$password)){
+        return false;
+      }
+      //Does the password pass the strong password tests
       return true;
     }
 
@@ -308,6 +329,58 @@ public function set_privilege($login){
            throw new Exception($e->getMessage());
        }
 }
+    public function change_password($user_id, $old_pw, $new_pw, $pw_confirm){
+      try{
+        $query = "SELECT id, salt, hashed_password FROM journalists WHERE id=?";
+        if($statement = $this->prepare($query)){
+           $binding = array($user_id);
+           if(!$statement -> execute($binding)){
+                   throw new Exception("Could not execute query.");
+           }
+           else{
+              $result = $statement->fetch(PDO::FETCH_ASSOC);
+              $salt = $result['salt'];
+              $hashed_password = $result['hashed_password'];
+              if($this->generate_password_hash($old_pw,$salt) !== $hashed_password){
+                  throw new Exception("Incorrect password!");
+              }
+              // else{
+              //    $id = $result["id"];
+              //    $this->set_authenticated_session($id,$hashed_password);
+              // }
+           }
+        }
+        else{
+              throw new Exception("Could not prepare statement.");
+        }
+
+        if($this->validate_user_name($user_id) && $this->validate_passwords($new_pw,$pw_confirm)){
+             $salt = $this->generate_salt();
+             $password_hash = $this->generate_password_hash($new_pw,$salt);
+             $query = "UPDATE journalists SET salt = ?, hashed_password = ? WHERE id = ?";
+             if($statement = $this->prepare($query)){
+                $binding = array($salt,$password_hash,$user_id);
+                if(!$statement -> execute($binding)){
+                    throw new Exception("Could not execute query.");
+                }
+             }
+             else{
+               throw new Exception("Could not prepare statement.");
+
+             }
+        }
+        else{
+           throw new Exception("Invalid data.");
+        }
+
+
+      }
+      catch(Exception $e){
+          throw new Exception($e->getMessage());
+      }
+       $this->set_authenticated_session($user_id,$password_hash);
+   }
+
 
     public function sign_out(){
         session_start();
