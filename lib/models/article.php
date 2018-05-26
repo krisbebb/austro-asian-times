@@ -238,12 +238,9 @@ class Article extends Database{
         }
         foreach($art_id as $art){
           foreach($tags as $k=>$d){
-            error_log("Article ID is {$art['article_id']}");
-
-      $this->add_tags($art['article_id'],$d);
-
-    }
-    }
+            $this->add_tags($art['article_id'],$d);
+          }
+        }
     }
 
     catch(Exception $e){

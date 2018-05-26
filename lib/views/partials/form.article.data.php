@@ -4,8 +4,7 @@
 <textarea name="data" rows="20" cols="50">
   <?php
   if ($story['data']){
-    error_log($story['data']);
-  echo "{$story['data']}";
+    echo "{$story['data']}";
   }
   ?>
 </textarea>

@@ -138,7 +138,7 @@ post("/member/:id",function($app){
              $app->set_message("is_admin",true);
              $name = $user->get_user_name($app->route_var("id"));
              $article = new Article();
-             // error_log($name);
+
              $results = $article->get_user_articles($id);
              if(empty($name)){
 	            $name = "NO SUCH USER";
@@ -330,8 +330,6 @@ get("/add_article",function($app){
     $user = new User();
     if($user->is_authenticated()){
        $app->set_message("authenticated",true);
-
-       $app->set_message("error","User ID is ".$user->get_user_id());
      }
      if ($user->is_admin()){
        $app->set_message("is_admin",true);
@@ -470,12 +468,6 @@ post("/add_article",function($app){
     try{
        $article = new Article();
        $article->add_article($headline,$data,$created_by,$tags);
-
-       foreach($tags as $k=>$d){
-         error_log("key {$k}, data {$d}");
-
-       }
-       //
     }
     catch(Exception $e){
       $app->set_flash("Error adding article. {$e->getMessage()}");
@@ -507,14 +499,8 @@ post("/edit_article",function($app){
     try{
        $article = new Article();
        $art_id = $article->get_article_id($headline);
-       error_log("article ID is {$art_id['article_id']}");
        $article->edit_article($headline,$data,$created_by,$tags,$art_id['article_id']);
 
-       foreach($tags as $k=>$d){
-         error_log("key {$k}, data {$d}");
-
-       }
-       //
     }
     catch(Exception $e){
       $app->set_flash("Error editing article. {$e->getMessage()}");
@@ -538,7 +524,6 @@ post("/change",function($app){
     try{
        $user = new User();
        $id = $user->get_user_id();
-       error_log("This current user is {$id}");
        $user->change_password($id, $oldpw, $newpw, $pw_confirm);
     }
     catch(Exception $e){
