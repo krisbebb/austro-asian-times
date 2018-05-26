@@ -453,7 +453,7 @@ post("/signin",function($app){
        $app->set_flash("Something wrong with name or password. Try again.");
        $app->redirect_to("/signin");
   }
-  $app->set_flash("Lovely, you are now signed in!");
+  $app->set_flash("Congratulations, you are now signed in!");
   $app->redirect_to("/");
 });
 
@@ -576,7 +576,7 @@ post("/change",function($app){
            $app->set_flash("Please complete all fields.");
            $app->redirect_to("/change");
       }
-      $app->set_flash("Lovely, you are now signed in!");
+      $app->set_flash("Congratulations, you are now signed in!");
       $app->redirect_to("/");
 
 

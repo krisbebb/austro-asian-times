@@ -8,7 +8,6 @@ if(!empty($latest)){
    echo "<table border='1'>";
    echo "<th>headline</th>
    <th>Tags</th>
-   <th>Writer</th>
    <th>updated_at</th>
 
    </tr>";
@@ -21,7 +20,6 @@ if(!empty($latest)){
         echo "<tr>
         <td><a href = 'story/{$story['article_id']}'>{$story['headline']}</a></td>
         <td>{$story['tags']}</td>
-        <td>{$story['created_by']}</td>
         <td>{$story['updated_at']}</td>
         </tr>";
        }

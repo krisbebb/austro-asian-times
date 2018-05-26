@@ -114,7 +114,7 @@ class Article extends Database{
     public function get_user_articles($id){
        try{
           // $query = "SELECT article_id, headline FROM articles";
-          $query = "SELECT * FROM articles WHERE created_by = ?";
+          $query = "SELECT * FROM articles WHERE created_by = ? ORDER BY updated_at DESC";
           if($statement = $this->prepare($query)){
              $binding = array($id);
              if(!$statement -> execute($binding)){
@@ -138,7 +138,7 @@ class Article extends Database{
     public function get_latest_articles(){
        try{
           // $query = "SELECT article_id, headline FROM articles";
-          $query = "SELECT articles.headline, articles.article_id, articles.created_by, GROUP_CONCAT(tag_text) as tags, updated_at FROM articles, article_tags, tags WHERE articles.article_id = article_tags.article_id AND article_tags.tag_id = tags.tag_id GROUP BY articles.headline ORDER BY updated_at DESC LIMIT 5";
+          $query = "SELECT articles.headline, articles.article_id, GROUP_CONCAT(tag_text) as tags, updated_at FROM articles, article_tags, tags WHERE articles.article_id = article_tags.article_id AND article_tags.tag_id = tags.tag_id GROUP BY articles.headline ORDER BY updated_at DESC LIMIT 5";
           if($statement = $this->prepare($query)){
              $binding = array();
              if(!$statement -> execute($binding)){
