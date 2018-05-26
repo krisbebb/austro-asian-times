@@ -1,11 +1,11 @@
 <?php
 /* SET to display all warnings in development. Comment next two lines out for production mode*/
-ini_set('display_errors','On');
-error_reporting(E_ERROR | E_PARSE);
+// ini_set('display_errors','On');
+// error_reporting(E_ERROR | E_PARSE);
 
 /* Set the path to the framework folder */
-DEFINE("LIB",$_SERVER['DOCUMENT_ROOT']."/lib/");
-// DEFINE("LIB",$_SERVER['DOCUMENT_ROOT']."/../lib/");
+// DEFINE("LIB",$_SERVER['DOCUMENT_ROOT']."/lib/");
+DEFINE("LIB",$_SERVER['DOCUMENT_ROOT']."/../lib/");
 
 /* SET VIEW paths */
 DEFINE("VIEWS",LIB."views/");
