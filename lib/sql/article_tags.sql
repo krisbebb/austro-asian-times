@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: May 26, 2018 at 04:54 AM
+-- Generation Time: May 26, 2018 at 05:31 AM
 -- Server version: 5.6.38
 -- PHP Version: 7.2.1
 
@@ -30,12 +30,17 @@ CREATE TABLE `article_tags` (
 --
 
 INSERT INTO `article_tags` (`article_id`, `tag_id`) VALUES
-(1, 5),
-(2, 5),
+(2, 1),
+(4, 1),
+(5, 1),
+(1, 2),
+(6, 2),
+(7, 2),
+(2, 4),
+(5, 4),
 (3, 5),
 (4, 5),
 (5, 5),
-(6, 5),
 (7, 5);
 
 --
