@@ -41,11 +41,7 @@ get("/",function($app){
 
 
       $app->set_message("latest",$results);
-    // $app->set_message("tags", $tags);
 
-   //   else if($user->is_db_empty()){
-   //       $app->redirect_to('/signup');
-   //   }
    }
    catch(Exception $e){
          $app->set_message("error, ",$e->getMessage());
@@ -69,7 +65,7 @@ get("/my_articles", function($app){
              }
 
              $article = new Article();
-             // error_log($name);
+
              $results = $article->get_user_articles($id);
              $name = $user->get_user_name($id);
 
@@ -177,8 +173,7 @@ post("/member/:id",function($app){
 get("/story/:art_id",function($app){
   $id = $app->route_var('art_id');
   if(is_numeric($id)){
-      // $app->force_to_http("/");
-      // $app->force_to_https("/story");
+
        $results="";
 
        try{
@@ -216,8 +211,7 @@ get("/story/:art_id",function($app){
 post("/story/:art_id/edit",function($app){
   $id = $app->route_var('art_id');
   if(is_numeric($id)){
-      // $app->force_to_http("/");
-      // $app->force_to_https("/story");
+
        $results="";
 
        try{
@@ -307,7 +301,7 @@ get("/signup",function($app){
 
 
 get("/signout",function($app){
-   // should this be GET or POST or PUT?????
+
    $app->force_to_https("/signout");
 
    try{
@@ -346,9 +340,7 @@ get("/add_article",function($app){
      $results = $article->get_articles();
      $app->set_message("articles",$results);
 
-  //   else if($user->is_db_empty()){
-  //       $app->redirect_to('/signup');
-  //   }
+
   }
   catch(Exception $e){
         $app->set_message("error, ",$e->getMessage());
@@ -369,26 +361,7 @@ get("/change",function($app){
    $app->set_message("title","Change password");
    $app->render(LAYOUT,"change_password");
 });
-//
-//    $app->force_to_https("/add_article");
-//    $app->set_message("title","Add News Article");
-//
-//    try{
-//      $user = new User();
-//      if($user->is_authenticated()){
-//         // $app->set_message("error","You are already signed in.");
-//         $app->set_message("is_authenticated",true);
-//         $app->set_flash("you are signed in");
-//      } else {
-//        $app->set_flash("you NOT signed in");
-//      }
-//
-//    }
-//    catch(Exception $e){
-//        $app->set_message("error",$e->getMessage($e));
-//    }
-//    $app->render(LAYOUT,"add_article");
-// });
+
 
 post("/signup",function($app){
 
